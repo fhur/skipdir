@@ -62,7 +62,10 @@ class SkipDir
     lines = file.split("\n")
     entries = {}
     lines.each do |line|
-      entry = line.split(" ")
+      entry = line.gsub("alias 'sd-",'')
+        .gsub("'cd ",'')
+        .gsub("'",'')
+        .split("=")
       entries[entry[0]] = entry[1]
     end
 
@@ -73,7 +76,7 @@ class SkipDir
   def save_map
     File.open(@location, 'w') do |file|
       @entries.each do |key, value|
-        file.write "#{key} #{value}\n"
+        file.write "alias 'sd-#{key}'='cd #{value}'\n"
       end
     end
   end
