@@ -17,9 +17,9 @@ Jeweler::Tasks.new do |gem|
   gem.name = "skipdir"
   gem.homepage = "http://github.com/fhur/skipdir"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
-  gem.email = "fhurtado@twilio.com"
+  gem.summary = %Q{Command line utility to manage bookmarked directories}
+  gem.description = gem.summary
+  gem.email = "fernandohur@gmail.com"
   gem.authors = ["fhur"]
   # dependencies defined in Gemfile
 end

@@ -1,6 +1,6 @@
 = skipdir
 
-Description goes here.
+Simple utility to manage bookmarked directories.
 
 == Contributing to skipdir
  
