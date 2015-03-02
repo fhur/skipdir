@@ -25,7 +25,7 @@ class SkipDirCli < Thor
     if dir.nil?
       STDERR.puts "Alias #{name} not found"
     else
-      `cd #{dir}`
+      Dir.chdir(dir)
     end
   end
 
