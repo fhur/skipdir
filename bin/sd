@@ -1,0 +1,52 @@
+#!/usr/bin/ruby
+
+require 'thor'
+require 'skipdir.rb'
+
+class SkipDirCli < Thor
+
+  LOCATION = "#{Dir.home}/.skipdir"
+
+  desc 'add ${alias}', 'Adds the current directory to the bookmark with the given alias'
+  def add(name, dir=Dir.pwd)
+    if name.strip.split(' ').size > 1
+      STDERR.puts 'Spaces not allowed for aliases'
+    end
+    puts "Adding alias '#{name}' => '#{dir}'"
+
+    @skipdir = SkipDir.new(LOCATION)
+    @skipdir.add name, dir
+  end
+
+  desc 'go ${alias}', "cd's to the given alias' directory"
+  def go(name)
+    @skipdir = SkipDir.new(LOCATION)
+    dir = @skipdir.get name
+    if dir.nil?
+      STDERR.puts "Alias #{name} not found"
+    else
+      `cd #{dir}`
+    end
+  end
+
+  desc 'list', "Shows a list of all saved bookmarks with their alias"
+  def list()
+    @skipdir = SkipDir.new(LOCATION)
+    max_key_len = @skipdir.all.map { |entry| entry[0].size }.max
+    @skipdir.all.each do |key, value|
+      puts key + ([" "] * (max_key_len + 1 - key.size)).join + value
+    end
+  end
+
+  desc 'rm ${alias}', "Removes the given alias"
+  def remove(name)
+    @skipdir = SkipDir.new(LOCATION)
+    unless @skipdir.remove(name)
+      STDERR.puts "No alias was found"
+    end
+  end
+
+  default_task :go
+
+end
+SkipDirCli.start ARGV
