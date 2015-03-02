@@ -14,7 +14,7 @@ class SkipDir
   # Adds a mapping from the given name to the given directory
   # @return a list of all current mappings as an array
   def add(name, dir)
-    @entries[name] = dir
+    @entries[name.to_s] = dir.to_s
     save_map
     return @entries
   end
@@ -29,6 +29,7 @@ class SkipDir
         return dir if name_alias.start_with? name
       end
     end
+    return nil
   end
 
   # A list of all current mappings
